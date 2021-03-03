@@ -85,7 +85,7 @@ function updateData(selectedCoin) {
 
 	document.getElementById("selectedCoin").innerHTML = selectedCoin;
     // Get the data again
-    d3.csv("/Resources/data/yearlyCoin2.csv", function(error, data) {
+    d3.csv("Resources/data/yearlyCoin2.csv", function(error, data) {
        	data.forEach(function(d) {
 	    	d.date = parseDate(d.date);
             d.price = +d.price;
