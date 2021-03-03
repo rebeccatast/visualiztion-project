@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="Resources/css/style.css">
+    <link rel="stylesheet" href="Resources/css/d3Style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Data Visualization</title>
+    
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <a class="navbar-brand p-2 text-secondary" href="index.html"><img src="Resources/images/wsbKid.jpeg" width="30" height="30" alt="">   Crypto Data Viz</a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+  
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+
+              <li class="nav-item">
+                <a class="nav-link" href="reddit.html">Reddit</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="comparison.html">Comparison</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="coinData.html">Coin Data</a>
+              </li>
+  
+            </ul>
+          </div>
+
+    </nav>
+    <h2 style="text-align:center"> What is Cryptocurrency?</h2>
+    <p style="margin-left: 40px">In recent months cryptocurrency has been in the forefront of almost all social media, platforms, national and international news, and advertisements. It clear that this decentralized and revolutionary form of currency will be mainstream in the buyer and seller’s market in the very near future. What started as seemingly impossible goal to replace the dollar has transformed into a futuristic way of paying for goods and services that is now being accepted by many companies across the United States and around the world. </p>
+    <p style="margin-left: 40px">Cryptocurrency is the broad term for digital encrypted currencies, the most notable of which is called Bitcoin. Upon its conception, Bitcoin took some time to catch the attention of the public, reaching a value of $1.00 February 9th of 2011. It has since then skyrocketed, making a name for itself in the US Stock Exchange and is currently trading at over $40,000 USD. </p>
+    <h2 style="text-align:center"> Project Proposal</h2>
+    <p style="margin-left: 40px">One major influence in the rise in popularity of cryptocurrency comes from users of online communities such as Reddit and social media influencers promoting cryptocurrency. The promotion of cryptocurrency in these mediums have brought in tons of young investors. In recent months we’ve seen what a group of keyboard crusaders can do to tip the scales of the stock market in cases such as Game Stop and AMC, but we have also seen this in cryptocurrencies such as Dogecoin. </p>
+    <p style="margin-left: 40px">With the rising popularity of cryptocurrency, we decided to take three separate approaches to analyzing current and past cryptocurrency value in terms of dollars and cents, but also in value development through an online community. We looked at historical data reaching back to 2015 related to the opening and closing prices, and percent change of Bitcoin, Dogecoin, Litecoin, and Ethereum as our first means of exploring the monetary value of specific cryptocurrencies (Coin Data). From the historical data we were able to pull the average closing price for each year (2015-2021) and compare those averages with the Federal Budget Deficit for each of those year (Comparison). The final approach was qualitative in nature, looking at commonly found words in titles of posts on Reddit’s Dogecoin subreddit. </p>
+    <h2 style="text-align:center"> Procedures</h2>
+    <h3 style="margin-left: 40px">Coin Data</h3>
+    <p style="margin-left: 40px">The initial set of historical data for our selected cryptocurrencies: Bitcoin, Dogecoin, Litecoin, and Etherium, was collected by searching Yahoo Finance. From these searches, we were able to get the daily opening and closing values, adjusted closing values, and volume for each cryptocurrency from August 7, 2015 - February 10, 2021. The initial data was cleaned using SQL. We also used this data to calculate percentage change ((open price-close price/open price)*100) for each coin on each date represented in the data. A complete listing of the open price, close price, and percent change for each cryptocurrency can be found and filtered on the Coin Data page. </p>
+    <h3 style="margin-left: 40px">Comparison</h3>
+    <p style="margin-left: 40px">Using the inital set of data collected from Yahoo Finance, we calculated the average closing price for each cryptocurrency by year (2015-2021). We then collected the Federal Budget Deficit for the years 2015-2021 from the US Treasury. On the Comparison page, you can find a comparison between the Federal Budget Deficit and the values of each cryptocurrency for each year. The idea behind this comparison was to explore whether there was a relationship between federal deficit and the value of our selected cryptocurrencies.</p>
+    <h3 style="margin-left: 40px">Reddit</h3>
+    <p style="margin-left: 40px">We selected Reddit as our social media platform to look at the influence of social media on cryptocurrencies. In order to collect the qualitative data, we first gained access to Reddit's API. Then using the Python library PRAW, we were able to access information related to postings on Reddit. We looked specifically at posting on the Dogecoin subreddit, filtering through the hot 350 posts on February 27. Using a for loop, we were able to iterate through the words used in our selected posts. The title of each post was split, creating a list of each word. This data went into a CSV file titled dogewords.csv. This printed each title in its own row and each word of each title in its own column, producing 350 rows of titles. Python was then used to search through all 350 rows and print out the frequency count of the number of times each word appears. Important note: Python does not like emojis. Python ran for over 7 hours with no result in the new csv file for word count. After Python let us down on the word count, the remainder of the qualitative content analysis was done by hand. Each of the individual columns of words into one long column, representing all 1854 words 
+      used. After painstakingly sifting though the documents taking out words like: “a”,”an”,”very”,”the”,”but”, we were able to create a very beautiful word cloud where the size of the bubble depends on the frequency of the word used in Reddit. The csv labeled dogecoin_final.csv is what we used to populate the bubble chart
+       </p>
+
+    
+
+        
+    </div>
+    <!-- Footer -->
+    <div id= "footer">
+        <div class="text-secondary">
+            <p>Rebecca Tast - Miguel Velez - Justine Skyler</p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+  <!-- <script type="text/javascript" src="Resources/js/app.js"></script> -->
+</body>
+</html>
