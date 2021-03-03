@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="Resources/css/style.css">
+    <link rel="stylesheet" href="Resources/css/d3Style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+  <script src='https://d3js.org/d3.v5.min.js'></script>
+  <style>
+    body { 
+      font-family: "avenir next", Arial, sans-serif;
+      font-size: 12px;
+      margin: 0;
+    }
+  </style>
+    <title>Crypto Data Visualization</title>
+    
+</head>
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <a class="navbar-brand p-2 text-secondary" href="mainIndex.html"><img src="Resources/images/snoo.png" width="30" height="30" alt="">   Crypto Data Viz</a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+  
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="reddit.html">Reddit</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="comparison.html">Comparison</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="coinDataJ.html">Coin Data</a>
+              </li>
+  
+            </ul>
+          </div>
+
+    </nav>
+
+<body>
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="container col-md-11 p-3 bg-white">
+      
+            <div class="col-md-12 text-success">
+                <h3>Reddit: To the Moon<img src="Resources/images/rocketship2.png" width="30" height="30" alt=""><img src="Resources/images/rocketship2.png" width="30" height="30" alt=""><img src="Resources/images/rocketship2.png" width="30" height="30" alt=""><img src="Resources/images/rocketship2.png" width="30" height="30" alt=""></h3>
+            </div>
+            <hr>
+      
+            <div class="col-md-12">
+                A qualitative analysis of the most frequently used (PG) words in post titles of the subreddit <b><i>Dogecoin</i></b> 
+                <br><br>
+            </div>
+            </div>
+            </div></div></section>
+<div id = 'vis'></div>
+
+  
+<script>
+// bubbleChart creation function
+function bubbleChart() {
+  const width = 1500;
+  const height = 1000;
+
+  // location to center the bubbles
+  const centre = { x: width/1.55, y: height/5.5};
+
+  // strength to apply to the position forces
+  const forceStrength = 0.01;
+
+  // these will be set in createNodes and chart functions
+  let svg = null;
+  let bubbles = null;
+  let labels = null;
+  let nodes = [];
+
+  // charge based on size of bubble, bigger bubbles toward the middle
+  function charge(d) {
+    return Math.pow(d.radius, 2.0) * 0.05
+  }
+
+  // create a force simulation and add forces to it
+  const simulation = d3.forceSimulation()
+    .force('charge', d3.forceManyBody().strength(charge))
+    // .force('center', d3.forceCenter(centre.x, centre.y))
+    .force('x', d3.forceX().strength(forceStrength).x(centre.x))
+    .force('y', d3.forceY().strength(forceStrength).y(centre.y))
+    .force('collision', d3.forceCollide().radius(d => d.radius + 4));
+
+  // force simulation starts up automatically, which we don't want as there aren't any nodes yet
+  simulation.stop();
+
+  // set up colour scale
+  const fillColour = d3.scaleOrdinal()
+  	.range(["#44bb44", "#00bbdd", "#b9b8b8", "#7986db", "#00dbc2"]);
+
+  // data manipulation function takes raw data from csv and converts it into an array of node objects, each node has data and draws bubble
+  function createNodes(rawData) {
+    // use max size in the data as the max in the scale's domain
+    const maxSize = d3.max(rawData, d => +d.total_count);
+
+    // size bubbles based on area
+    const radiusScale = d3.scaleSqrt()
+      .domain([0, maxSize])
+      .range([0, 140])
+
+    // use map() to convert raw data into node data
+    const myNodes = rawData.map(d => ({
+      ...d,
+      radius: radiusScale(+d.total_count),
+      size: +d.total_count,
+      x: Math.random() * 1500,
+      y: Math.random() * 1000
+    }))
+
+    return myNodes;
+  }
+
+  // prepares raw data for visualisation, adds an svg element, starts visualization
+  let chart = function chart(selector, rawData) {
+    // convert raw data into nodes
+    nodes = createNodes(rawData);
+
+    // create svg element
+    svg = d3.select(selector)
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
+
+    // bind nodes to circles
+    const elements = svg.selectAll('.bubble')
+      .data(nodes, d => d.id)
+      .enter()
+      .append('g')
+
+    bubbles = elements
+      .append('circle')
+      .classed('bubble', true)
+      .attr('r', d => d.radius)
+      .attr('fill', d => fillColour(d.word))
+
+    // labels
+    labels = elements
+      .append('text')
+      .attr('dy', '.3em')
+      .style('text-anchor', 'middle')
+      .style('font-size', 10)
+      .text(d => d.word)
+
+    // set simulation's nodes and simulation automatically starts
+    simulation.nodes(nodes)
+      .on('tick', ticked)
+      .restart();
+  }
+
+  // repositioning of the circles based on retick and x and y data
+  function ticked() {
+    bubbles
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+
+    labels
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+  }
+
+  // return chart 
+  return chart;
+}
+
+// new bubble chart 
+let myBubbleChart = bubbleChart();
+
+// display data once called from csv
+function display(data) {
+  myBubbleChart('#vis', data);
+}
+
+// load data
+d3.csv('Resources/data/bubblechart/dogewords_final_count.csv').then(display);
+
+</script>
+</body>
