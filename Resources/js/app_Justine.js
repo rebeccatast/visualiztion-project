@@ -41,7 +41,7 @@ var svg = d3.select("#lineGraph")
               "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
-d3.csv("/Resources/data/deficit.csv", function(error, data) {
+d3.csv("Resources/data/deficit.csv", function(error, data) {
     data.forEach(function(d) {
 		d.date = parseDate(d.date2);
         d.amount = +d.amount;
