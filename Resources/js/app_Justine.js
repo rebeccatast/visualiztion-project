@@ -99,8 +99,8 @@ function updateData(selectedCoin) {
 	 	y0.domain([0, d3.max(data.filter(function(dd) {return dd.coin == 'bitcoin';}), function(d) { return d.price; })]);
 	} else if (selectedCoin == 'litecoin' ) {
 	 	y0.domain([0, d3.max(data.filter(function(dd) {return dd.coin == 'litecoin';}), function(d) { return d.price; })]);
-	} else if (selectedCoin == 'etherium' ) {
-	 	y0.domain([0, d3.max(data.filter(function(dd) {return dd.coin == 'etherium';}), function(d) { return d.price; })]);
+	} else if (selectedCoin == 'ethereum' ) {
+	 	y0.domain([0, d3.max(data.filter(function(dd) {return dd.coin == 'ethereum';}), function(d) { return d.price; })]);
 	} else if (selectedCoin == 'doge' ) {
 	 	y0.domain([0, d3.max(data.filter(function(dd) {return dd.coin == 'doge';}), function(d) { return d.price; })]);
 	} 
@@ -112,8 +112,8 @@ function updateData(selectedCoin) {
 	 	svg.select(".line").duration(750).attr("d", valueline(data.filter(function(dd) {return dd.coin == 'bitcoin';})));
 	} else if (selectedCoin == 'litecoin' ) {
 	 	svg.select(".line").duration(750).attr("d", valueline(data.filter(function(dd) {return dd.coin == 'litecoin';})));
-	} else if (selectedCoin == 'etherium' ) {
-	 	svg.select(".line").duration(750).attr("d", valueline(data.filter(function(dd) {return dd.coin == 'etherium';})));
+	} else if (selectedCoin == 'ethereum' ) {
+	 	svg.select(".line").duration(750).attr("d", valueline(data.filter(function(dd) {return dd.coin == 'ethereum';})));
 	} else if (selectedCoin == 'doge' ) {
 	 	svg.select(".line").duration(750).attr("d", valueline(data.filter(function(dd) {return dd.coin == 'doge';})));
     } 
