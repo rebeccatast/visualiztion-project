@@ -27,7 +27,7 @@ d3.csv("../Resources/data/yearlyCoin.csv").then(function(data) {
         d.date_part = +d.date_part;
         d.bitcoin = +d.bitcoin;
         d.litecoin = +d.litecoin;
-        d.etherium = +d.etherium;
+        d.ethereum = +d.ethereum;
         d.doge = +d.doge;
     });
 
@@ -124,8 +124,8 @@ d3.csv("../Resources/data/yearlyCoin.csv").then(function(data) {
     chartGroup.append("text")
         .attr("transform", "translate(" + -margin.left*2/6 + "," + height/2 + ") rotate(270)")
         .attr("class", "axis-text inactive")
-        .attr("data-axis-name", "etherium")
-        .text("Etherium")
+        .attr("data-axis-name", "ethereum")
+        .text("Ethereum")
 
     chartGroup.append("text")
         .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
